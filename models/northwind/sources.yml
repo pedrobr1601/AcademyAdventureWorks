@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: erpnorthwind
+    tables:
+      - name: orders
+      - name: customers 
+        description: essa é a tabela de clientes
+        columns:
+          - name: id
+            description: Primary key of the orders table
+            tests:
+              - unique
