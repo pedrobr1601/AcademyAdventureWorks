@@ -36,4 +36,5 @@ models:
       # Applies to all files under models/example/
       example:
           materialized: view
-    nortwind:
+      northwind:
+          materialized: view

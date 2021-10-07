@@ -3,11 +3,12 @@ version: 2
 sources:
   - name: erpnorthwind
     tables:
-      - name: orders
-      - name: customers 
+      - name: public_orders
+      - name: public_customers 
         description: essa é a tabela de clientes
         columns:
-          - name: id
-            description: Primary key of the orders table
+          - name: customer_id
+            description: id do cliente
             tests:
               - unique
+              - not_null
