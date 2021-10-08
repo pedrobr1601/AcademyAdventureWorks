@@ -8,7 +8,6 @@ models:
           - name: order_id
             description: "a chave primária original da tabela"
             tests:
-                - unique
                 - not_null
 
     - name: dim_customers
