@@ -19,3 +19,27 @@ models:
             tests:
                 - unique
                 - not_null
+    - name: dim_products
+      description: "dimensão produtos"
+      columns:
+          - name: product_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+    - name: dim_shippers
+      description: "dimensão Transportadores"
+      columns:
+          - name: shipper_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+    - name: dim_suppliers
+      description: "dimensão fornecedores"
+      columns:
+          - name: supplier_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
