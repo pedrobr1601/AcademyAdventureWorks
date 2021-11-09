@@ -13,3 +13,4 @@ sources:
       - name: sales_salesorderheadersalesreason
       - name: sales_salesreason
       - name: sales_salesterritory
+      - name: person_stateprovince

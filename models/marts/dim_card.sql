@@ -3,7 +3,7 @@
 with
     staging as (
         select *
-        from {{  ref('stg_Card')}}
+        from {{  ref('stg_cards')}}
     )
     , transformed as (
         select
