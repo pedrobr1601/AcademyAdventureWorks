@@ -1,19 +1,29 @@
 with
-    source_data as (
+    customer as (
         select
-            country
-            , city
-            , fax
-            , postal_code
-            , address
-            , region
-            , customer_id
-            , contact_name
-            , phone
-            , company_name
-            , contact_title
-        from {{  source('erpnorthwind', 'public_customers')  }} 
-)
+            customerid
+            , personid
+            , storeid
+            , territoryid
+        from {{  source('adventureworks', 'sales_customer')  }} 
+    )
+    , person as (
+        select
+            businessentityid
+            , persontype
+            , title
+            , firstname
+            , middlename
+            , lastname
+            , suffix
+            , additionalcontactinfo
+            , demographics
+        from {{  source('adventureworks', 'person_person')  }}
+        )
+  
 
 select * 
-from source_data
+from customer
+
+select *
+from person

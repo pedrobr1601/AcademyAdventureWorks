@@ -1,18 +1,15 @@
 version: 2
 
 sources:
-  - name: erpnorthwind
+  - name: adventureworks
     tables:
-      - name: public_orders
-      - name: public_customers 
-        description: essa é a tabela de clientes
-        columns:
-          - name: customer_id
-            description: id do cliente
-            tests:
-              - unique
-              - not_null
-      - name: public_shippers
-      - name: public_suppliers
-      - name: public_products
-      - name: public_order_details
+      - name: person_address
+      - name: person_person 
+      - name: production_product
+      - name: sales_creditcard
+      - name: sales_customer
+      - name: sales_salesorderdetail
+      - name: sales_salesorderheader
+      - name: sales_salesorderheadersalesreason
+      - name: sales_salesreason
+      - name: sales_salesterritory

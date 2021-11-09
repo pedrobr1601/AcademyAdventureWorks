@@ -1,22 +1,25 @@
 with 
     source_data as (
         select
-            order_id
-            , employee_id
-            , order_date
-            , customer_id
-            , ship_region
-            , shipped_date
-            , ship_country
-            , ship_name
-            , ship_postal_code
-            , ship_city
+            salesorderid
+            , revisionnumber
+            , onlineorderflag
+            , purchaseordernumber
+            , accountnumber
+            , customerid
+            , salespersonid
+            , territoryid
+            , billtoaddressid
+            , shiptoaddressid
+            , shipmethodid
+            , creditcardid
+            , creditcardapprovalcode
+            , currencyrateid
+            , subtotal
+            , taxamt
             , freight
-            , ship_via as shipper_id
-            , ship_address
-            , required_date
-    
-        from {{  source('erpnorthwind', 'public_orders')  }}
+            , totaldue
+        from {{  source('adventureworks', 'sales_salesorderheader')  }}
     )
 
     select * 
