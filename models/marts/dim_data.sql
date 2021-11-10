@@ -3,15 +3,15 @@
 with
     staging as (
         select *
-        from {{  ref('stg_reason')}}
+        from {{  ref('stg_data')}}
     )
     , transformed as (
         select
-            row_number() over (order by salesorderid) as reason_sk --surrogate key auto incremental
+            row_number() over (order by salesorderid) as data_sk --surrogate key auto incremental
             , salesorderid
-            , salesreasonid 
-            , reason
-            , reasontype
+            , orderdate
+            , duedate
+            , shipdate
         from staging
     )
 

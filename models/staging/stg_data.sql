@@ -1,6 +1,7 @@
 with 
     source_data as (
         select
+            salesorderid
             , orderdate
             , duedate
             , shipdate

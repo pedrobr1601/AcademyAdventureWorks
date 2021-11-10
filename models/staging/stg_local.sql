@@ -13,10 +13,10 @@ with
     , territory as (
         select
             territoryid
-            , name
+            , sales_salesterritory.name as country_name  
             , countryregioncode
-            , group
-        from {{  source('adventureworks', 'sales_salesterritory')  }}
+            , sales_salesterritory.group as grupo 
+        from {{  source('adventureworks', 'sales_salesterritory')  }} as sales_salesterritory
         )
     , stateprovince as (
         select
@@ -24,17 +24,42 @@ with
             , stateprovincecode
             , countryregioncode
             , isonlystateprovinceflag
-            , name
+            , personstateprovince.name as state_name
             , territoryid
-        from {{  source('adventureworks', 'person_stateprovince')  }}
+        from {{  source('adventureworks', 'person_stateprovince')  }} as personstateprovince
     )
-  
+    , addressWS as (
+        select
+            stateprovince.territoryid
+            , stateprovince.stateprovinceid
+            , stateprovince.state_name
+            , stateprovince.stateprovincecode
+            , addressinfo.addressid
+            , addressinfo.addressline1
+            , addressinfo.addressline2
+            , addressinfo.city
+            , addressinfo.postalcode
+            , addressinfo.spatiallocation
+        from addressinfo
+       left join stateprovince on addressinfo.stateprovinceid = stateprovince.stateprovinceid
+    )
+    , final as (
+        select
+            territory.country_name
+            , territory.countryregioncode
+            , territory.grupo
+            , addressWS.territoryid
+            , addressWS.stateprovincecode
+            , addressWS.state_name
+            , addressWS.addressid
+            , addressWS.addressline1
+            , addressWS.addressline2
+            , addressWS.city
+            , addressWS.postalcode
+            , addressWS.spatiallocation
+        from addressWS
+        left join territory on addressWS.territoryid = territory.territoryid
+    )
 
-select * 
-from addressinfo
-
-select *
-from territory
-
-select *
-from stateprovince
+    select *
+    from final 

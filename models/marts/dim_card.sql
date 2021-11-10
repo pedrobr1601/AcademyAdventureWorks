@@ -7,7 +7,7 @@ with
     )
     , transformed as (
         select
-        row_number() over (order by creditcardid) as shipper_sk --surrogate key auto incremental
+        row_number() over (order by creditcardid) as creditcard_sk --surrogate key auto incremental
             , creditcardid
             , cardtype
             , cardnumber

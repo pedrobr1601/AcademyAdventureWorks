@@ -9,7 +9,7 @@ with
         select
         row_number() over (order by productid) as product_sk --surrogate key auto incremental
             , productid		
-            , name
+            , product_name
             , productnumber
         from staging
     )
