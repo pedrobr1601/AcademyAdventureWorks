@@ -6,6 +6,7 @@ with
             , onlineorderflag
             , purchaseordernumber
             , accountnumber
+            , orders.status as sales_status
             , customerid
             , salespersonid
             , territoryid
@@ -13,7 +14,6 @@ with
             , shiptoaddressid
             , shipmethodid
             , creditcardid
-            , orders.status as sales_status
             , creditcardapprovalcode
             , currencyrateid
             , subtotal
