@@ -5,7 +5,7 @@ models:
     - name: fact_orders
       description: "tabela de fatos"
       columns:
-          - name: order_id
+          - name: salesorderid
             description: "a chave primária original da tabela"
             tests:
                 - not_null
@@ -13,7 +13,7 @@ models:
     - name: dim_customers
       description: "dimensão consumidores"
       columns:
-          - name: customer_id
+          - name: customerid
             description: "The primary key for this table"
             tests:
                 - unique
@@ -21,24 +21,40 @@ models:
     - name: dim_products
       description: "dimensão produtos"
       columns:
-          - name: product_id
+          - name: productid
             description: "The primary key for this table"
             tests:
                 - unique
                 - not_null
-    - name: dim_shippers
+    - name: dim_card
       description: "dimensão Transportadores"
       columns:
-          - name: shipper_id
+          - name: creditcardid
             description: "The primary key for this table"
             tests:
                 - unique
                 - not_null
-    - name: dim_suppliers
+    - name: dim_data
       description: "dimensão fornecedores"
       columns:
-          - name: supplier_id
+          - name: salesorderid
             description: "The primary key for this table"
             tests:
                 - unique
                 - not_null
+    - name: dim_local
+      description: "dimensão fornecedores"
+      columns:
+          - name: addressid
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+    - name: dim_reason
+      description: "dimensão fornecedores"
+      columns:
+          - name: salesorderid
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null                

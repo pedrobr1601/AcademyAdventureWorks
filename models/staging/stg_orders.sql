@@ -13,13 +13,14 @@ with
             , shiptoaddressid
             , shipmethodid
             , creditcardid
+            , orders.status as sales_status
             , creditcardapprovalcode
             , currencyrateid
             , subtotal
             , taxamt
             , freight
             , totaldue
-        from {{  source('adventureworks', 'sales_salesorderheader')  }}
+        from {{  source('adventureworks', 'sales_salesorderheader')  }} as orders
     )
 
     select * 
