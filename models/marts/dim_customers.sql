@@ -7,18 +7,18 @@ with
     )
     , transformed as (
         select
-        row_number() over (order by customer_id) as customer_sk --surrogate key auto incremental
-        , customer_id
-        , country
-        , city
-        , fax
-        , postal_code
-        , address
-        , region
-        , contact_name
-        , phone
-        , company_name
-        , contact_title
+        row_number() over (order by customerid) as customer_sk --surrogate key auto incremental
+        , customerid
+        , storeid
+        , territoryid
+        , persontype
+        , title
+        , firstname
+        , middlename
+        , lastname
+        , suffix
+        , additionalcontactinfo
+        , demographics
         from staging
     )
 

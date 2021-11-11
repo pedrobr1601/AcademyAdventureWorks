@@ -1,12 +1,15 @@
 with 
     source_data as (
         select
-            order_id
-            , product_id
-            , unit_price
-            , quantity
-            , discount
-        from {{  source('erpnorthwind', 'public_order_details')  }}
+            salesorderid
+            , salesorderdetailid
+            , carriertrackingnumber
+            , orderqty
+            , productid
+            , specialofferid
+            , unitprice
+            , unitpricediscount
+        from {{  source('adventureworks', 'sales_salesorderdetail')  }}
     )
 
     select * 

@@ -10,65 +10,112 @@ with
         select *
         from {{ref('dim_products')}}
     )
-     , shippers as (
+    , card as (
         select *
-        from {{ref('dim_shippers')}}
+        from {{ref('dim_card')}}
     )
-     , suppliers as (
+    , locali as (
         select *
-        from {{ref('dim_suppliers')}}
+        from {{ref('dim_local')}}
+    )
+    , datas as (
+        select *
+        from {{ref('dim_data')}}
+    )
+    , reason as (
+        select *
+        from {{ref('dim_reason')}}
     )
     , orders_with_sk as (
     select
-    orders.order_id
-    , customers.customer_id as customer_fk
-    , shippers.shipper_sk as shipper_fk
-    , orders.order_date
-    , orders.ship_region
-    , orders.shipped_date
-    , orders.ship_country
-    , orders.ship_address
-    , orders.ship_postal_code
-    , orders.ship_city
-    , orders.ship_name
+    orders.salesorderid
+    , customers.customer_sk as customer_fk
+    , datas.data_sk as data_fk
+    , locali.address_sk as local_fk
+    , card.creditcard_sk as card_fk
+    , orders.sales_status
+    , orders.purchaseordernumber
+    , orders.accountnumber
+    , orders.salespersonid
+    , orders.shipmethodid
+    , orders.creditcardapprovalcode
+    , orders.currencyrateid
+    , orders.subtotal
+    , orders.taxamt
     , orders.freight
-    , orders.required_date
+    , orders.totaldue
     
     from {{ref('stg_orders')}} as orders
-    left join customers on orders.customer_id = customers.customer_id
-    left join shippers on orders.shipper_id = shippers.shipper_id
+    left join customers on orders.customerid = customers.customerid
+    left join datas on orders.salesorderid = datas.salesorderid
+    left join locali on orders.billtoaddressid = locali.addressid
+    left join card on orders.creditcardid = card.creditcardid
 )
 , order_detail_with_sk as (
     select
-     order_id
+     salesorderid
      , products.product_sk as product_fk
-     , order_detail.unit_price
-     , order_detail.quantity
-     , order_detail.discount
+     , order_detail.unitprice
+     , order_detail.orderqty
+     , order_detail.unitpricediscount
+     , order_detail.salesorderdetailid
     from {{ref('stg_order_detail')}} as order_detail
-    left join products on order_detail.product_id = products.product_id
+    left join products on order_detail.productid = products.productid
 )
 , final as (
     select
-    order_detail_with_sk.order_id
+    order_detail_with_sk.salesorderid
     , orders_with_sk.customer_fk
-    , orders_with_sk.shipper_fk     
-    , orders_with_sk.order_date
-    , orders_with_sk.ship_region
-    , orders_with_sk.shipped_date
-    , orders_with_sk.ship_country
-    , orders_with_sk.ship_address
-    , orders_with_sk.ship_postal_code
-    , orders_with_sk.ship_city
-    , orders_with_sk.ship_name
+    , orders_with_sk.data_fk
+    , orders_with_sk.local_fk
+    , orders_with_sk.card_fk     
+    , orders_with_sk.sales_status
+    , orders_with_sk.purchaseordernumber
+    , orders_with_sk.accountnumber
+    , orders_with_sk.salespersonid
+    , orders_with_sk.shipmethodid
+    , orders_with_sk.creditcardapprovalcode
+    , orders_with_sk.currencyrateid
+    , orders_with_sk.subtotal
+    , orders_with_sk.taxamt
     , orders_with_sk.freight
-    , orders_with_sk.required_date
+    , orders_with_sk.totaldue
     , order_detail_with_sk.product_fk   
-    , order_detail_with_sk.unit_price
-    , order_detail_with_sk.quantity
-    , order_detail_with_sk.discount
+    , order_detail_with_sk.unitprice
+    , order_detail_with_sk.orderqty
+    , order_detail_with_sk.unitpricediscount
+    , order_detail_with_sk.salesorderdetailid
     from orders_with_sk
-    left join order_detail_with_sk on orders_with_sk.order_id = order_detail_with_sk.order_id
+    left join order_detail_with_sk on orders_with_sk.salesorderid = order_detail_with_sk.salesorderid
+)
+, final_join as (
+    select
+    reason.reason_sk as reason_fk
+    , reason.salesreasonid 
+    , final.salesorderid
+    , final.customer_fk
+    , final.data_fk
+    , final.local_fk
+    , final.card_fk     
+    , final.sales_status
+    , final.purchaseordernumber
+    , final.accountnumber
+    , final.salespersonid
+    , final.shipmethodid
+    , final.creditcardapprovalcode
+    , final.currencyrateid
+    , final.subtotal
+    , final.taxamt
+    , final.freight
+    , final.totaldue
+    , final.product_fk   
+    , final.unitprice
+    , final.orderqty
+    , final.unitpricediscount
+    , final.salesorderdetailid
+    from final
+    full join reason on final.salesorderid = reason.salesorderid
+
 )
 select *
-from final
+from final_join

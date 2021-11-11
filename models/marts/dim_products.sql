@@ -7,17 +7,10 @@ with
     )
     , transformed as (
         select
-        row_number() over (order by product_id) as product_sk --surrogate key auto incremental
-            , product_id		
-            , supplier_id
-            , category_id
+        row_number() over (order by productid) as product_sk --surrogate key auto incremental
+            , productid		
             , product_name
-            , quantity_per_unit
-            , unit_price
-            , units_in_stock	
-            , units_on_order	
-            , reorder_level	
-            , is_discontinued
+            , productnumber
         from staging
     )
 

@@ -1,10 +1,10 @@
 with
     sum_quantity as (
         SELECT
-            sum(quantity) as cnt
+            sum(orderqty) as cnt
         FROM {{ ref ('fact_orders') }}
-        where order_date
-        between '1998-03-01' and '1998-03-31'
+        where salesorderid
+        between 50000 and 60000
     )
 
-select * from sum_quantity where cnt != 4065
+select * from sum_quantity where cnt != 106460
