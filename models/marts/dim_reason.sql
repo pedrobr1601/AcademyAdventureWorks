@@ -7,8 +7,7 @@ with
     )
     , transformed as (
         select
-            row_number() over (order by salesorderid) as reason_sk --surrogate key auto incremental
-            , salesorderid
+            row_number() over (order by salesreasonid) as reason_sk --surrogate key auto incremental
             , salesreasonid 
             , reason
             , reasontype
