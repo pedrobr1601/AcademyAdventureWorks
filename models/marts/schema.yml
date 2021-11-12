@@ -10,7 +10,7 @@ models:
             tests:
                 - not_null
                 - unique
-    - name: fact_orders_detail
+    - name: fact_order_details
       description: "tabela de fatos pedido item"
       columns:
           - name: salesorderdetailid
