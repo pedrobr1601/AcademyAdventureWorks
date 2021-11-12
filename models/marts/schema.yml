@@ -3,13 +3,21 @@ version: 2
 
 models:
     - name: fact_orders
-      description: "tabela de fatos"
+      description: "tabela de fatos pedidos"
       columns:
           - name: salesorderid
             description: "a chave primária original da tabela"
             tests:
                 - not_null
-
+                - unique
+    - name: fact_orders_detail
+      description: "tabela de fatos pedido item"
+      columns:
+          - name: salesorderdetailid
+            description: "a chave primária original da tabela"
+            tests:
+                - not_null
+                - unique                
     - name: dim_customers
       description: "dimensão consumidores"
       columns:
@@ -27,7 +35,7 @@ models:
                 - unique
                 - not_null
     - name: dim_card
-      description: "dimensão Transportadores"
+      description: "dimensão cartão"
       columns:
           - name: creditcardid
             description: "The primary key for this table"
@@ -35,7 +43,7 @@ models:
                 - unique
                 - not_null
     - name: dim_data
-      description: "dimensão fornecedores"
+      description: "dimensão data"
       columns:
           - name: salesorderid
             description: "The primary key for this table"
@@ -43,7 +51,7 @@ models:
                 - unique
                 - not_null
     - name: dim_local
-      description: "dimensão fornecedores"
+      description: "dimensão localização"
       columns:
           - name: addressid
             description: "The primary key for this table"
@@ -51,7 +59,14 @@ models:
                 - unique
                 - not_null
     - name: dim_reason
-      description: "dimensão fornecedores"
+      description: "dimensão motivos"
+      columns:
+          - name: salesreasonid
+            description: "The primary key for this table"
+            tests:
+                - not_null 
+    - name: bridge_reason_order
+      description: "Ponte entre motivos e pedidos"
       columns:
           - name: salesorderid
             description: "The primary key for this table"

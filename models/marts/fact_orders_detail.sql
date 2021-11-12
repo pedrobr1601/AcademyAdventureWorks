@@ -51,9 +51,20 @@ with
     left join locali on orders.billtoaddressid = locali.addressid
     left join card on orders.creditcardid = card.creditcardid
 )
+, order_detail_with_sk as (
+    select
+     order_detail.salesorderid
+     , products.product_sk as product_fk
+     , order_detail.unitprice
+     , order_detail.orderqty
+     , order_detail.unitpricediscount
+     , order_detail.salesorderdetailid
+    from {{ref('stg_order_detail')}} as order_detail
+    left join products on order_detail.productid = products.productid
+)
 , final as (
     select
-    orders_with_sk.salesorderid
+    order_detail_with_sk.salesorderid
     , orders_with_sk.customer_fk
     , orders_with_sk.data_fk
     , orders_with_sk.local_fk
@@ -69,7 +80,13 @@ with
     , orders_with_sk.taxamt
     , orders_with_sk.freight
     , orders_with_sk.totaldue
+    , order_detail_with_sk.product_fk   
+    , order_detail_with_sk.unitprice
+    , order_detail_with_sk.orderqty
+    , order_detail_with_sk.unitpricediscount
+    , order_detail_with_sk.salesorderdetailid
     from orders_with_sk
+    left join order_detail_with_sk on orders_with_sk.salesorderid = order_detail_with_sk.salesorderid
 )
 select *
 from final
